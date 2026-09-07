@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rotation Schedule 2026–2027</title>
+<style>
+  :root{
+    --bg: #F7F7F4;
+    --panel: #FFFFFF;
+    --ink: #1B2A2E;
+    --ink-soft: #5B6B6E;
+    --line: #E1E4E1;
+    --accent: #0E6E63;
+
+    /* site colors */
+    --path:   #DCEBFB; --path-ink:   #1D4E89;
+    --surg:   #DDEFE0; --surg-ink:   #1E6B3A;
+    --koc:    #ECE9E3; --koc-ink:    #6B6355;
+    --a:      #E4F3D9; --a-ink:      #4C7A21;
+    --d:      #FBF3C7; --d-ink:      #8A6D00;
+    --m:      #F6E1F0; --m-ink:      #8A2D6F;
+    --f-site: #FCE3C3; --f-ink:      #A0551A;
+    --j:      #F2DCC4; --j-ink:      #8A4A12;
+    --ja:     #E9E4C2; --ja-ink:     #6B6415;
+    --s-site: #E6E0F8; --s-ink:      #5B3FA0;
+    --path-txt: #B23B3B;
+    --error:  #D93025;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;min-height:100vh;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding: 20px 14px 40px;
+  }
+
+  /* Main Schedule View Styles */
+  .wrap{max-width:100%;margin:0 auto;}
+
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-bottom:14px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom:10px;
+  }
+  header h1{
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin:0;
+  }
+  header .sub{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:2px;
+  }
+  
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .filter-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .filter-box select {
+    padding: 5px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    font-size: 12px;
+    background: #fff;
+  }
+
+  /* Table Container & Fixed Layout */
+  .table-scroll{
+    overflow-x: hidden;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--panel);
+    width: 100%;
+  }
+  table{
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    font-size: 11px;
+  }
+  thead th{
+    position: sticky;
+    top: 0;
+    background: var(--ink);
+    color: #fff;
+    font-weight: 600;
+    padding: 8px 3px;
+    text-align: center;
+    z-index: 2;
+    border-right: 1px solid rgba(255,255,255,0.12);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  thead th:first-child{
+    left: 0;
+    z-index: 4;
+    width: 115px;
+    text-align: left;
+    padding-left: 8px;
+  }
+  thead th:nth-child(2){
+    left: 115px;
+    z-index: 4;
+    width: 45px;
+    text-align: center;
+  }
+  thead th .month{display:block; font-weight:700; font-size:11px;}
+  thead th .year{display:block; font-weight:400; font-size:9.5px; opacity:.75;}
+
+  tbody td, tbody th{
+    padding: 6px 3px;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  tbody th{
+    text-align: left;
+    background: var(--panel);
+    position: sticky;
+    left: 0;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--ink);
+    z-index: 3;
+    width: 115px;
+    padding-left: 8px;
+  }
+  tbody td.yr-col {
+    position: sticky;
+    left: 115px;
+    background: var(--panel);
+    z-index: 3;
+    text-align: center;
+    width: 45px;
+    border-right: 2px solid var(--line);
+    padding: 6px 2px;
+  }
+
+  /* R-YR Badges */
+  .yr-badge {
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.3px;
+  }
+  .yr-r5 { background: #E8F5E9; color: #1B5E20; border: 1px solid #A5D6A7; }
+  .yr-r4 { background: #E3F2FD; color: #0D47A1; border: 1px solid #90CAF9; }
+  .yr-r3 { background: #FFF3E0; color: #E65100; border: 1px solid #FFCC80; }
+  .yr-r2 { background: #F3E5F5; color: #4A148C; border: 1px solid #CE93D8; }
+
+  .cell{
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 10px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    transition: all 0.2s ease;
+  }
+  .cell.path{ background:var(--path); color:var(--path-txt); }
+  .cell.surg{ background:var(--surg); color:var(--surg-ink); }
+  .cell.koc{ background:var(--koc); color:var(--koc-ink); }
+  .cell.a{ background: transparent; color: var(--a-ink); }
+  .cell.d{ background:var(--d); color:var(--d-ink); }
+  .cell.m{ background:var(--m); color:var(--m-ink); }
+  .cell.f{ background:var(--f-site); color:var(--f-ink); }
+  .cell.j{ background:var(--j); color:var(--j-ink); }
+  .cell.ja{ background:var(--ja); color:var(--ja-ink); }
+  .cell.s{ background:var(--s-site); color:var(--s-ink); }
+
+  /* Highlight & Dim states for filtering */
+  .cell.dimmed {
+    opacity: 0.18;
+  }
+  .cell.highlighted {
+    box-shadow: 0 0 0 2px var(--accent), 0 0 8px rgba(14, 110, 99, 0.45);
+    font-weight: 700;
+    transform: scale(1.03);
+    z-index: 5;
+    position: relative;
+  }
+
+  /* Legend */
+  .legend{
+    margin-top:16px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 18px;
+  }
+  .legend h2{
+    font-size:12px;
+    text-transform:none;
+    margin:0 0 8px;
+    color:var(--ink-soft);
+    font-weight:600;
+  }
+  .legend-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap:6px 16px;
+    font-size:12px;
+  }
+  .legend-item{display:flex; align-items:center; gap:6px;}
+  .legend-item .cell{padding:2px 6px; font-size:11px; width:auto;}
+  .legend-note{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px solid var(--line);
+    font-size:11.5px;
+    color:var(--ink-soft);
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+
+<!-- Schedule View -->
+<div id="scheduleView" class="wrap">
+
+  <header>
+    <div>
+      <h1 id="scheduleTitle">Rotation Schedule Year 2026-2027</h1>
+      <div class="sub">Academic year 2026 – 2027 · Dermatology Residency Program</div>
+    </div>
+    
+    <div class="header-actions">
+      <div class="filter-box">
+        <label for="viewFilter">View:</label>
+        <select id="viewFilter">
+          <option value="ALL">ALL Residents</option>
+          <optgroup label="Group Views">
+            <option value="ALL">ALL Residents</option>
+            <option value="R5">R5 Residents</option>
+            <option value="R4">R4 Residents</option>
+            <option value="R3">R3 Residents</option>
+            <option value="R2">R2 Residents</option>
+          </optgroup>
+          <optgroup label="R5 Residents">
+            <option value="Abdullah AlNama">Abdullah AlNama</option>
+            <option value="Dalal AlSharaf">Dalal AlSharaf</option>
+            <option value="Hessah AlMutairi">Hessah AlMutairi</option>
+            <option value="Jasem AlSanea">Jasem AlSanea</option>
+            <option value="Maraheb AlSheridah">Maraheb AlSheridah</option>
+            <option value="Nasser AlRumaidhi">Nasser AlRumaidhi</option>
+          </optgroup>
+          <optgroup label="R4 Residents">
+            <option value="Adnan M Ahmad">Adnan M Ahmad</option>
+            <option value="Fatemah Taher">Fatemah Taher</option>
+            <option value="Hasan Ashkanani">Hasan Ashkanani</option>
+            <option value="Hayam Alenezi">Hayam Alenezi</option>
+            <option value="Hessa AlGhuwainem">Hessa AlGhuwainem</option>
+            <option value="Hessah AlHajraf">Hessah AlHajraf</option>
+            <option value="Hussah AlDosari">Hussah AlDosari</option>
+            <option value="Kawthar Safar">Kawthar Safar</option>
+            <option value="Maryam AlMutairi">Maryam AlMutairi</option>
+            <option value="Moneerah AlMazyad">Moneerah AlMazyad</option>
+            <option value="Rawan Almutairi">Rawan Almutairi</option>
+            <option value="Retaj Aldhaen">Retaj Aldhaen</option>
+            <option value="Sara Al-Rabiah">Sara Al-Rabiah</option>
+            <option value="Sarah Qasem">Sarah Qasem</option>
+            <option value="Zahraa AlHawaj">Zahraa AlHawaj</option>
+            <option value="Zainab Asghar">Zainab Asghar</option>
+          </optgroup>
+          <optgroup label="R3 Residents">
+            <option value="Abdullah AlRefaie">Abdullah AlRefaie</option>
+            <option value="Ahmad AlSarraf">Ahmad AlSarraf</option>
+            <option value="Areej Alyousef">Areej Alyousef</option>
+            <option value="Asya Al Sayegh">Asya Al Sayegh</option>
+            <option value="Dana Alkandari">Dana Alkandari</option>
+            <option value="Fatmah Altaweel">Fatmah Altaweel</option>
+            <option value="Hanin Al Khazi">Hanin Al Khazi</option>
+            <option value="HashemBoalbanat">HashemBoalbanat</option>
+            <option value="Hawraa Mayouf">Hawraa Mayouf</option>
+            <option value="Mohammad Al Adwani">Mohammad Al Adwani</option>
+            <option value="Noora Alabdali">Noora Alabdali</option>
+            <option value="Nourah AlAzmi">Nourah AlAzmi</option>
+            <option value="Nouriya AlFadal">Nouriya AlFadal</option>
+            <option value="Shaima Alkhulaifi">Shaima Alkhulaifi</option>
+            <option value="Shaima AlShammari">Shaima AlShammari</option>
+            <option value="Taiba Al Bassam">Taiba Al Bassam</option>
+            <option value="Yasmeene Mandani">Yasmeene Mandani</option>
+            <option value="Yousef Al Ali">Yousef Al Ali</option>
+          </optgroup>
+          <optgroup label="R2 Residents">
+            <option value="Amal Almarri">Amal Almarri</option>
+            <option value="Awatef Alsaadoun">Awatef Alsaadoun</option>
+            <option value="Awsaf Alduwaihees">Awsaf Alduwaihees</option>
+            <option value="Deemah Alzoabi">Deemah Alzoabi</option>
+            <option value="Fahad AlSharhan">Fahad AlSharhan</option>
+            <option value="Fatema Alfahad">Fatema Alfahad</option>
+            <option value="Fatemah Alotaibi">Fatemah Alotaibi</option>
+            <option value="Fatima Alterki">Fatima Alterki</option>
+            <option value="Fatmah Alaazmi">Fatmah Alaazmi</option>
+            <option value="Fatmah AlDousari">Fatmah AlDousari</option>
+            <option value="Fawziah Alrejaib">Fawziah Alrejaib</option>
+            <option value="Hessa AlShuraian">Hessa AlShuraian</option>
+            <option value="Kotaiba Alenezi">Kotaiba Alenezi</option>
+            <option value="Manar Alhubaidah">Manar Alhubaidah</option>
+            <option value="Maryam Alzaabi">Maryam Alzaabi</option>
+            <option value="Naser Alajmi">Naser Alajmi</option>
+            <option value="Rawan Almohammad">Rawan Almohammad</option>
+            <option value="Reem Alqusaimi">Reem Alqusaimi</option>
+            <option value="Retaj Jamal">Retaj Jamal</option>
+            <option value="Sayed A Hashim">Sayed A Hashim</option>
+            <option value="Shahad Abul">Shahad Abul</option>
+            <option value="Shahad Alhaddad">Shahad Alhaddad</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="filter-box">
+        <label for="rotationFilter">Rotation:</label>
+        <select id="rotationFilter">
+          <option value="ALL">All Rotations</option>
+          <optgroup label="Derm Categories">
+            <option value="Derm(S)">Derm(S)</option>
+            <option value="Derm(D)">Derm(D)</option>
+            <option value="Derm(A)">Derm(A)</option>
+            <option value="Derm(M)">Derm(M)</option>
+            <option value="Derm(JA)">Derm(JA)</option>
+            <option value="Derm(J)">Derm(J)</option>
+            <option value="Derm(F)">Derm(F)</option>
+            <option value="Derm(AF)">Derm(AF)</option>
+          </optgroup>
+          <optgroup label="Pediatric Derm (P.Derm)">
+            <option value="P.Derm(S)">P.Derm(S)</option>
+            <option value="P.Derm(D)">P.Derm(D)</option>
+            <option value="P.Derm(A)">P.Derm(A)</option>
+            <option value="P.Derm(F)">P.Derm(F)</option>
+          </optgroup>
+          <optgroup label="Pathology (Path)">
+            <option value="PATH">Path</option>
+            <option value="Path(S)">Path(S)</option>
+            <option value="Path(D)">Path(D)</option>
+            <option value="Path(F)">Path(F)</option>
+          </optgroup>
+          <optgroup label="Surgery">
+            <option value="SURGERY">Surgery</option>
+            <option value="Surgery(S)">Surgery(S) / Surg(S)</option>
+            <option value="Surgery(D)">Surgery(D) / Surg(D)</option>
+            <option value="Surgery(M)">Surgery(M) / Surg(M)</option>
+            <option value="P.Sur">Plastic Surgery (P.Sur)</option>
+          </optgroup>
+          <optgroup label="Laser & PT">
+            <option value="LASER">Laser</option>
+            <option value="Laser(M)">Laser(M)</option>
+            <option value="Laser(S)">Laser(s) / LASER(S)</option>
+            <option value="PT">Phototherapy (PT)</option>
+          </optgroup>
+          <optgroup label="Other Rotations">
+            <option value="KOC">KOC</option>
+            <option value="Im+BC">Immunology (Im+BC)</option>
+            <option value="Wound">Wound Clinic</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="filter-box">
+        <label for="siteFilter">Site:</label>
+        <select id="siteFilter">
+          <option value="ALL">All Sites</option>
+          <option value="S">(S) Sabah</option>
+          <option value="A">(A) Adan</option>
+          <option value="F">(F) Farwaniya</option>
+          <option value="JA">(JA) Jaber</option>
+          <option value="M">(M) Mubarak</option>
+          <option value="J">(J) Jahra</option>
+          <option value="D">(D) Amiri</option>
+        </select>
+      </div>
+      <div class="filter-box">
+        <label for="monthFilter">Period:</label>
+        <select id="monthFilter">
+          <option value="ALL">All Months</option>
+          <option value="0">Oct 2026</option>
+          <option value="1">Nov 2026</option>
+          <option value="2">Dec 2026</option>
+          <option value="3">Jan 2027</option>
+          <option value="4">Feb 2027</option>
+          <option value="5">Mar 2027</option>
+          <option value="6">Apr 2027</option>
+          <option value="7">May 2027</option>
+          <option value="8">Jun 2027</option>
+          <option value="9">Jul 2027</option>
+          <option value="10">Aug 2027</option>
+          <option value="11">Sep 2027</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Resident</th>
+          <th>R-YR</th>
+          <th><span class="month">Oct</span><span class="year">2026</span></th>
+          <th><span class="month">Nov</span><span class="year">2026</span></th>
+          <th><span class="month">Dec</span><span class="year">2026</span></th>
+          <th><span class="month">Jan</span><span class="year">2027</span></th>
+          <th><span class="month">Feb</span><span class="year">2027</span></th>
+          <th><span class="month">Mar</span><span class="year">2027</span></th>
+          <th><span class="month">Apr</span><span class="year">2027</span></th>
+          <th><span class="month">May</span><span class="year">2027</span></th>
+          <th><span class="month">Jun</span><span class="year">2027</span></th>
+          <th><span class="month">Jul</span><span class="year">2027</span></th>
+          <th><span class="month">Aug</span><span class="year">2027</span></th>
+          <th><span class="month">Sep</span><span class="year">2027</span></th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <!-- rows injected by JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="legend">
+    <h2>Hospital & Site Locations</h2>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="cell s">(S)</span> As'ad Al Hamad Derma Centre</div>
+      <div class="legend-item"><span class="cell d">(D)</span> Abdulkareem Al Saeed Derm Center (Al Amiri)</div>
+      <div class="legend-item"><span class="cell a">(A)</span> Al Adan Hospital</div>
+      <div class="legend-item"><span class="cell j">(J)</span> Al Jahra Hospital</div>
+      <div class="legend-item"><span class="cell m">(M)</span> Mubarak Al Kabeer Hospital</div>
+      <div class="legend-item"><span class="cell f">(F)</span> Farwaniya Hospital</div>
+      <div class="legend-item"><span class="cell ja">(JA)</span> Shaikh Jaber Al Ahmad Al Sabah Hospital</div>
+      <div class="legend-item"><span class="cell a">(AF)</span> Jaber Al-Ahmad Armed Forces Hospital</div>
+      <div class="legend-item"><span class="cell koc">KOC</span> Ahmadi Hospital</div>
+    </div>
+    <div class="legend-note">
+      <strong>Rotations & Specialties:</strong>
+      Derm: General Dermatology &nbsp;|&nbsp; 
+      P.Derm: Pediatric Dermatology &nbsp;|&nbsp; 
+      PT: Phototherapy &nbsp;|&nbsp; 
+      Path: Pathology &nbsp;|&nbsp; 
+      Surg: Surgery;
+      P.Sur: Plastic Surgery at Al Babtain (or) Jaber Al Ahmad &nbsp;|&nbsp; 
+      Im: Immunology at Yacob Behbehani Center (2 days/wk) &nbsp;|&nbsp; 
+      BC(S): Bullous Clinic (2–3 days/wk) &nbsp;|&nbsp; 
+      On-Call: Full month at As'ad Al Hamad during Immunology.
+    </div>
+  </div>
+
+</div>
+
+<script>
+const data = [
+  // R5 Residents
+  { name:"Abdullah AlNama", yr:"R5", cells:[
+    {t:"Path (S)",cls:"s"}, {t:"Surg(S)",cls:"s"}, {t:"Path (F)",cls:"f"},
+    {t:"KOC",cls:"koc"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}
+  ]},
+  { name:"Dalal AlSharaf", yr:"R5", cells:[
+    {t:"Derm(A)",cls:"a"}, {t:"Path (S)",cls:"s"}, {t:"Surg(S)",cls:"s"},
+    {t:"Path (F)",cls:"f"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}
+  ]},
+  { name:"Hessah AlMutairi", yr:"R5", cells:[
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Path (S)",cls:"s"},
+    {t:"Surg(S)",cls:"s"}, {t:"Path (F)",cls:"f"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}
+  ]},
+  { name:"Jasem AlSanea", yr:"R5", cells:[
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"Path (S)",cls:"s"}, {t:"Surg(S)",cls:"s"}, {t:"Path (F)",cls:"f"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}
+  ]},
+  { name:"Maraheb AlSheridah", yr:"R5", cells:[
+    {t:"Surg(S)",cls:"s"}, {t:"Path (F)",cls:"f"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"Path (S)",cls:"s"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}
+  ]},
+  { name:"Nasser AlRumaidhi", yr:"R5", cells:[
+    {t:"Path (F)",cls:"f"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"Path (S)",cls:"s"}, {t:"Surg(S)",cls:"s"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}
+  ]},
+
+  // R4 Residents
+  { name:"Adnan M Ahmad", yr:"R4", cells:[
+    {t:"KOC",cls:"koc"}, {t:"Derm(S)",cls:"s"}, {t:"Derm(S)",cls:"s"},
+    {t:"Derm(S)",cls:"s"}, {t:"Derm(S)",cls:"s"}, {t:"Derm(S)",cls:"s"},
+    {t:"PT(S)",cls:"s"}, {t:"Derm(S)",cls:"s"}, {t:"Im+BC(S)",cls:"s"},
+    {t:"P.Sur(B)",cls:"surg"}, {t:"Surg(S)",cls:"surg"}, {t:"Laser(M)",cls:"m"}
+  ]},
+  { name:"Fatemah Taher", yr:"R4", cells:[
+    {t:"Derm(S)",cls:"s"}, {t:"Im+BC(S)",cls:"s"}, {t:"KOC",cls:"koc"},
+    {t:"Derm(S)",cls:"s"}, {t:"P.Sur(B)",cls:"surg"}, {t:"Surg(S)",cls:"surg"},
+    {t:"LASER(S)",cls:"s"}, {t:"PT(S)",cls:"s"}, {t:"Derm(S)",cls:"s"},
+    {t:"Derm(S)",cls:"s"}, {t:"Derm(S)",cls:"s"}, {t:"Derm(S)",cls:"s"}
+  ]},
+  { name:"Hasan Ashkanani", yr:"R4", cells:[
+    {t:"Derm(J)",cls:"j"}, {t:"KOC",cls:"koc"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"LASER(S)",cls:"s"},
+    {t:"Im+BC(S)",cls:"s"}, {t:"P.Sur(B)",cls:"surg"}, {t:"PT(S)",cls:"s"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Surg(S)",cls:"surg"}
+  ]},
+  { name:"Hayam Alenezi", yr:"R4", cells:[
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"PT(S)",cls:"s"}, {t:"KOC",cls:"koc"}, {t:"Im+BC(S)",cls:"s"},
+    {t:"P.Sur(JA)",cls:"ja"}, {t:"Surg(D)",cls:"surg"}, {t:"Laser(M)",cls:"m"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}
+  ]},
+  { name:"Hessa AlGhuwainem", yr:"R4", cells:[
+    {t:"P.Sur(JA)",cls:"ja"}, {t:"Im+BC(S)",cls:"s"}, {t:"PT(S)",cls:"s"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"},
+    {t:"Laser(M)",cls:"m"}, {t:"KOC",cls:"koc"}, {t:"Laser(M)",cls:"m"}
+  ]},
+  { name:"Hessah AlHajraf", yr:"R4", cells:[
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"KOC",cls:"koc"}, {t:"PT(S)",cls:"s"},
+    {t:"Surg(S)",cls:"surg"}, {t:"P.Sur(B)",cls:"surg"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Im+BC(S)",cls:"s"}, {t:"LASER(S)",cls:"s"}
+  ]},
+  { name:"Hussah AlDosari", yr:"R4", cells:[
+    {t:"PT(S)",cls:"s"}, {t:"P.Sur(JA)",cls:"ja"}, {t:"Im+BC(S)",cls:"s"},
+    {t:"Surg(M)",cls:"surg"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"Laser(M)",cls:"m"}, {t:"KOC",cls:"koc"}
+  ]},
+  { name:"Kawthar Safar", yr:"R4", cells:[
+    {t:"KOC",cls:"koc"}, {t:"PT(S)",cls:"s"}, {t:"Im+BC(S)",cls:"s"},
+    {t:"P.Sur(JA)",cls:"ja"}, {t:"Surg(D)",cls:"surg"}, 
+    {t:"Derm(M)",cls:"m"}, {t:"Laser(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, 
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}
+  ]},
+  { name:"Maryam AlMutairi", yr:"R4", cells:[
+    {t:"Surg(S)",cls:"surg"}, {t:"Im+BC(S)",cls:"s"}, {t:"KOC",cls:"koc"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"PT(S)",cls:"s"}, {t:"LASER(S)",cls:"s"}, {t:"P.Sur(B)",cls:"surg"}
+  ]},
+  { name:"Moneerah AlMazyad", yr:"R4", cells:[
+    {t:"Im+BC(S)",cls:"s"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"KOC",cls:"koc"}, {t:"PT(S)",cls:"s"},
+    {t:"LASER(S)",cls:"s"}, {t:"P.Sur(B)",cls:"surg"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Surg(S)",cls:"surg"}
+  ]},
+  { name:"Rawan Almutairi", yr:"R4", cells:[
+    {t:"LASER(S)",cls:"s"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"KOC",cls:"koc"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Surg(S)",cls:"surg"},
+    {t:"P.Sur(JA)",cls:"ja"}, {t:"PT(S)",cls:"s"}, {t:"Im+BC(S)",cls:"s"}
+  ]},
+  { name:"Retaj Aldhaen", yr:"R4", cells:[
+    {t:"Surg(M)",cls:"surg"}, {t:"KOC",cls:"koc"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"LASER(S)",cls:"s"}, {t:"Derm(S)",cls:"s"},
+    {t:"PT(S)",cls:"s"}, {t:"Im+BC(S)",cls:"s"}, {t:"P.Sur(JA)",cls:"ja"}
+  ]},
+  { name:"Sara Al-Rabiah", yr:"R4", cells:[
+    {t:"Laser(M)",cls:"m"}, {t:"KOC",cls:"koc"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"PT(S)",cls:"s"}, {t:"Im+BC(S)",cls:"s"},
+    {t:"P.Sur(B)",cls:"surg"}, {t:"Surg(D)",cls:"surg"}, {t:"Derm(D)",cls:"d"}
+  ]},
+  { name:"Sarah Qasem", yr:"R4", cells:[
+    {t:"Im+BC(S)",cls:"s"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"KOC",cls:"koc"},
+    {t:"PT(S)",cls:"s"}, {t:"Laser(M)",cls:"m"}, {t:"P.Sur(B)",cls:"surg"},
+    {t:"Surg(S)",cls:"surg"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}
+  ]},
+  { name:"Zahraa AlHawaj", yr:"R4", cells:[
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"KOC",cls:"koc"}, {t:"Im+BC(S)",cls:"s"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"LASER(S)",cls:"s"},
+    {t:"Surg(D)",cls:"surg"}, {t:"PT(S)",cls:"s"}, {t:"P.Sur(JA)",cls:"ja"}
+  ]},
+  { name:"Zainab Asghar", yr:"R4", cells:[
+    {t:"KOC",cls:"koc"}, {t:"Laser(M)",cls:"m"}, {t:"Im+BC(S)",cls:"s"},
+    {t:"PT(S)",cls:"s"}, {t:"P.Sur(JA)",cls:"ja"}, {t:"Surg(M)",cls:"surg"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}
+  ]},
+
+  // R3 Residents
+  { name:"Abdullah AlRefaie", yr:"R3", cells:[
+    {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"}, {t:"Laser(M)",cls:"m"},
+    {t:"P.Derm(D)",cls:"d"}, {t:"Wound(JA)",cls:"ja"}, {t:"P.Derm(A)",cls:"a"},
+    {t:"KOC",cls:"koc"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Path (F)",cls:"path"}
+  ]},
+  { name:"Ahmad AlSarraf", yr:"R3", cells:[
+    {t:"P.Derm(A)",cls:"a"}, {t:"Laser(M)",cls:"m"}, {t:"P.Derm(D)",cls:"d"},
+    {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"}, {t:"Derm(D)",cls:"d"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"},
+    {t:"Path (D)",cls:"path"}, {t:"KOC",cls:"koc"}, {t:"Wound(JA)",cls:"ja"}
+  ]},
+  { name:"Areej Alyousef", yr:"R3", cells:[
+    {t:"Laser(M)",cls:"m"}, {t:"P.Derm(D)",cls:"d"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"KOC",cls:"koc"}, {t:"Path (F)",cls:"path"}, {t:"P.Derm(A)",cls:"a"},
+    {t:"Wound(JA)",cls:"ja"}, {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"}
+  ]},
+  { name:"Asya Al Sayegh", yr:"R3", cells:[
+    {t:"Path (F)",cls:"path"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"Wound(JA)",cls:"ja"},
+    {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"}, {t:"KOC",cls:"koc"},
+    {t:"P.Derm(A)",cls:"a"}, {t:"P.Derm(D)",cls:"d"}, {t:"Laser(M)",cls:"m"}
+  ]},
+  { name:"Dana Alkandari", yr:"R3", cells:[
+    {t:"P.Derm(D)",cls:"d"}, {t:"Wound(JA)",cls:"ja"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"Laser(M)",cls:"m"},
+    {t:"Path (F)",cls:"path"}, {t:"KOC",cls:"koc"}, {t:"Wound(JA)",cls:"ja"},
+    {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"}, {t:"LASER(S)",cls:"s"}
+  ]},
+  { name:"Fatmah Altaweel", yr:"R3", cells:[
+    {t:"Laser(M)",cls:"m"}, {t:"P.Derm(D)",cls:"d"}, {t:"P.Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"KOC",cls:"koc"}, {t:"Path (F)",cls:"path"},
+    {t:"Wound(JA)",cls:"ja"}, {t:"P.Derm(A)",cls:"a"}, {t:"P.Derm(S)",cls:"s"}
+  ]},
+  { name:"Hanin Al Khazi", yr:"R3", cells:[
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"}, {t:"P.Derm(A)",cls:"a"},
+    {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"}, {t:"Wound(JA)",cls:"ja"},
+    {t:"Path (D)",cls:"path"}, {t:"P.Derm(D)",cls:"d"}, {t:"KOC",cls:"koc"},
+    {t:"Laser(M)",cls:"m"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"}
+  ]},
+  { name:"HashemBoalbanat", yr:"R3", cells:[
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Path (F)",cls:"path"}, {t:"Derm(F)",cls:"f"}, {t:"KOC",cls:"koc"},
+    {t:"P.Derm(A)",cls:"a"}, {t:"Wound(JA)",cls:"ja"}, {t:"P.Derm(S)",cls:"s"},
+    {t:"P.Derm(S)",cls:"s"}, {t:"Laser(M)",cls:"m"}, {t:"P.Derm(D)",cls:"d"}
+  ]},
+  { name:"Hawraa Mayouf", yr:"R3", cells:[
+    {t:"P.Derm(D)",cls:"d"}, {t:"Wound(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"}, {t:"Path (S)",cls:"path"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"KOC",cls:"koc"}, {t:"P.Derm(A)",cls:"a"},
+    {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"}, {t:"LASER(S)",cls:"s"}
+  ]},
+  { name:"Mohammad Al Adwani", yr:"R3", cells:[
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Wound(JA)",cls:"ja"},
+    {t:"Laser(M)",cls:"m"}, {t:"P.Derm(A)",cls:"a"}, {t:"P.Derm(A)",cls:"a"},
+    {t:"KOC",cls:"koc"}, {t:"P.Derm(D)",cls:"d"}, {t:"P.Derm(D)",cls:"d"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Path (D)",cls:"path"}
+  ]},
+  { name:"Noora Alabdali", yr:"R3", cells:[
+    {t:"Wound(JA)",cls:"ja"}, {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"},
+    {t:"P.Derm(A)",cls:"a"}, {t:"P.Derm(D)",cls:"d"}, {t:"Laser(M)",cls:"m"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(M)",cls:"m"}, {t:"KOC",cls:"koc"}, {t:"Path (D)",cls:"path"}
+  ]},
+  { name:"Nourah AlAzmi", yr:"R3", cells:[
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"P.Derm(A)",cls:"a"}, {t:"P.Derm(D)",cls:"d"},
+    {t:"Laser(M)",cls:"m"}, {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"},
+    {t:"KOC",cls:"koc"}, {t:"Path (D)",cls:"path"}, {t:"Wound(JA)",cls:"ja"}
+  ]},
+  { name:"Nouriya AlFadal", yr:"R3", cells:[
+    {t:"Path (D)",cls:"path"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"KOC",cls:"koc"},
+    {t:"Wound(JA)",cls:"ja"}, {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"},
+    {t:"P.Derm(D)",cls:"d"}, {t:"Laser(M)",cls:"m"}, {t:"P.Derm(A)",cls:"a"}
+  ]},
+  { name:"Shaima Alkhulaifi", yr:"R3", cells:[
+    {t:"Wound(JA)",cls:"ja"}, {t:"P.Derm(A)",cls:"a"}, {t:"P.Derm(S)",cls:"s"},
+    {t:"P.Derm(S)",cls:"s"}, {t:"Laser(M)",cls:"m"}, {t:"P.Derm(D)",cls:"d"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"KOC",cls:"koc"}, {t:"Path (F)",cls:"path"}, {t:"Derm(F)",cls:"f"}
+  ]},
+  { name:"Shaima AlShammari", yr:"R3", cells:[
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Path (F)",cls:"path"},
+    {t:"Wound(JA)",cls:"ja"}, {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"},
+    {t:"P.Derm(D)",cls:"d"}, {t:"Laser(M)",cls:"m"}, {t:"KOC",cls:"koc"},
+    {t:"P.Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}
+  ]},
+  { name:"Taiba Al Bassam", yr:"R3", cells:[
+    {t:"P.Derm(S)",cls:"s"}, {t:"P.Derm(S)",cls:"s"}, {t:"Derm(D)",cls:"d"},
+    {t:"Derm(D)",cls:"d"}, {t:"Path (D)",cls:"path"}, {t:"Laser(M)",cls:"m"},
+    {t:"Wound(JA)",cls:"ja"}, {t:"P.Derm(A)",cls:"a"}, {t:"P.Derm(D)",cls:"d"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}, {t:"KOC",cls:"koc"}
+  ]},
+  { name:"Yasmeene Mandani", yr:"R3", cells:[
+    {t:"P.Derm(S)",cls:"s"}, {t:"Laser(M)",cls:"m"}, {t:"P.Derm(D)",cls:"d"},
+    {t:"P.Derm(A)",cls:"a"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"Path (D)",cls:"path"},
+    {t:"KOC",cls:"koc"}, {t:"Wound(JA)",cls:"ja"}, {t:"P.Derm(S)",cls:"s"}
+  ]},
+  { name:"Yousef Al Ali", yr:"R3", cells:[
+    {t:"Derm(JA)",cls:"ja"}, {t:"Path (F)",cls:"path"}, {t:"Wound(JA)",cls:"ja"},
+    {t:"P.Derm(D)",cls:"d"}, {t:"Laser(M)",cls:"m"}, {t:"P.Derm(S)",cls:"s"},
+    {t:"P.Derm(S)",cls:"s"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"P.Derm(A)",cls:"a"}, {t:"KOC",cls:"koc"}
+  ]},
+
+  // R2 Residents
+  { name:"Amal Almarri", yr:"R2", cells:[
+    {t:"Surg(S)",cls:"surg"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Path (S)",cls:"path"}
+  ]},
+  { name:"Awatef Alsaadoun", yr:"R2", cells:[
+    {t:"Path(S)",cls:"path"}, {t:"Surg(S)",cls:"surg"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(AF)",cls:"a"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}
+  ]},
+  { name:"Awsaf Alduwaihees", yr:"R2", cells:[
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Path(D)",cls:"path"},
+    {t:"Surg(S)",cls:"surg"}, {t:"Derm(AF)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}
+  ]},
+  { name:"Deemah Alzoabi", yr:"R2", cells:[
+    {t:"Derm(J)",cls:"j"}, {t:"Path(S)",cls:"path"}, {t:"Surg(S)",cls:"surg"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"}
+  ]},
+  { name:"Fahad AlSharhan", yr:"R2", cells:[
+    {t:"P.Sur(B)",cls:"surg"}, {t:"Genetics",cls:"path"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Surg(S)",cls:"surg"}, {t:"Path (S)",cls:"path"},
+    {t:"Derm(S)",cls:"s"}, {t:"Derm(S)",cls:"s"}, {t:"Derm(S)",cls:"s"}
+  ]},
+  { name:"Fatema Alfahad", yr:"R2", cells:[
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Path(S)",cls:"path"},
+    {t:"Surg(D)",cls:"surg"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(AF)",cls:"a"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}
+  ]},
+  { name:"Fatemah Alotaibi", yr:"R2", cells:[
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"},
+    {t:"Path(S)",cls:"path"}, {t:"Surg(D)",cls:"surg"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}
+  ]},
+  { name:"Fatima Alterki", yr:"R2", cells:[
+    {t:"Derm(AF)",cls:"a"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Path(S)",cls:"path"}, {t:"Surg(D)",cls:"surg"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(JA)",cls:"ja"}
+  ]},
+  { name:"Fatmah Alaazmi", yr:"R2", cells:[
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(AF)",cls:"a"}, {t:"Derm(D)",cls:"d"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Path(S)",cls:"path"},
+    {t:"Surg(D)",cls:"surg"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(JA)",cls:"ja"}
+  ]},
+  { name:"Fatmah AlDousari", yr:"R2", cells:[
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(D)",cls:"d"},
+    {t:"Path(D)",cls:"path"}, {t:"Surg(S)",cls:"surg"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}
+  ]},
+  { name:"Fawziah Alrejaib", yr:"R2", cells:[
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(D)",cls:"d"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"},
+    {t:"Path(S)",cls:"path"}, {t:"Surg(D)",cls:"surg"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}
+  ]},
+  { name:"Hessa AlShuraian", yr:"R2", cells:[
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Path (F)",cls:"path"}, {t:"Surg(D)",cls:"surg"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(M)",cls:"m"}
+  ]},
+  { name:"Kotaiba Alenezi", yr:"R2", cells:[
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(AF)",cls:"a"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Path(S)",cls:"path"}, {t:"Surg(D)",cls:"surg"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"}
+  ]},
+  { name:"Manar Alhubaidah", yr:"R2", cells:[
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(JA)",cls:"ja"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Path(S)",cls:"path"}, {t:"Surg(D)",cls:"surg"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"}
+  ]},
+  { name:"Maryam Alzaabi", yr:"R2", cells:[
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(JA)",cls:"ja"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Path(S)",cls:"path"},
+    {t:"Surg(S)",cls:"surg"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}
+  ]},
+  { name:"Naser Alajmi", yr:"R2", cells:[
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(AF)",cls:"a"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"},
+    {t:"Path (F)",cls:"path"}, {t:"Surg(S)",cls:"surg"}, {t:"Derm(A)",cls:"a"}
+  ]},
+  { name:"Rawan Almohammad", yr:"R2", cells:[
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"},
+    {t:"Derm(J)",cls:"j"}, {t:"Path (F)",cls:"path"}, {t:"Surg(D)",cls:"surg"}
+  ]},
+  { name:"Reem Alqusaimi", yr:"R2", cells:[
+    {t:"Surg(D)",cls:"surg"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Path (F)",cls:"path"}
+  ]},
+  { name:"Retaj Jamal", yr:"R2", cells:[
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(D)",cls:"d"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"},
+    {t:"Path(S)",cls:"path"}, {t:"Surg(S)",cls:"surg"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}
+  ]},
+  { name:"Sayed A Hashim", yr:"R2", cells:[
+    {t:"Path(D)",cls:"path"}, {t:"Surg(D)",cls:"surg"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(JA)",cls:"ja"}, {t:"Derm(AF)",cls:"a"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}
+  ]},
+  { name:"Shahad Abul", yr:"R2", cells:[
+    {t:"Derm(M)",cls:"m"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(AF)",cls:"a"},
+    {t:"Derm(J)",cls:"j"}, {t:"Derm(J)",cls:"j"}, {t:"Path(D)",cls:"path"},
+    {t:"Surg(S)",cls:"surg"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(F)",cls:"f"}, {t:"Derm(JA)",cls:"ja"}
+  ]},
+  { name:"Shahad Alhaddad", yr:"R2", cells:[
+    {t:"Derm(J)",cls:"j"}, {t:"Path(D)",cls:"path"}, {t:"Surg(D)",cls:"surg"},
+    {t:"Derm(A)",cls:"a"}, {t:"Derm(A)",cls:"a"}, {t:"Derm(F)",cls:"f"},
+    {t:"Derm(F)",cls:"f"}, {t:"Derm(M)",cls:"m"}, {t:"Derm(M)",cls:"m"},
+    {t:"Derm(D)",cls:"d"}, {t:"Derm(D)",cls:"d"}, {t:"Derm(J)",cls:"j"}
+  ]}
+];
+
+// Populate Table Rows
+const tbody = document.getElementById('tbody');
+data.forEach(row => {
+  const tr = document.createElement('tr');
+  tr.dataset.name = row.name;
+  tr.dataset.yr = row.yr;
+
+  // Name Header Column
+  const th = document.createElement('th');
+  th.textContent = row.name;
+  tr.appendChild(th);
+
+  // R-YR Column
+  const tdYr = document.createElement('td');
+  tdYr.className = 'yr-col';
+  const spanYr = document.createElement('span');
+  spanYr.className = 'yr-badge yr-' + row.yr.toLowerCase();
+  spanYr.textContent = row.yr;
+  tdYr.appendChild(spanYr);
+  tr.appendChild(tdYr);
+
+  // Rotation Cells
+  row.cells.forEach(c => {
+    const td = document.createElement('td');
+    const span = document.createElement('span');
+    span.className = 'cell ' + c.cls;
+    span.textContent = c.t;
+    td.appendChild(span);
+    tr.appendChild(td);
+  });
+  tbody.appendChild(tr);
+});
+
+// Filter Logic
+const viewFilter = document.getElementById('viewFilter');
+const rotationFilter = document.getElementById('rotationFilter');
+const siteFilter = document.getElementById('siteFilter');
+const monthFilter = document.getElementById('monthFilter');
+
+function applyFilters() {
+  const viewVal = viewFilter.value;
+  const rotVal = rotationFilter.value;
+  const siteVal = siteFilter.value;
+  const monthVal = monthFilter.value;
+
+  const rows = document.querySelectorAll('#tbody tr');
+  const isYearGroup = ['R5', 'R4', 'R3', 'R2'].includes(viewVal);
+
+  rows.forEach(tr => {
+    let matchView = true;
+
+    // 1. View / Resident filter
+    if (viewVal !== 'ALL') {
+      if (isYearGroup) {
+        matchView = (tr.dataset.yr === viewVal);
+      } else {
+        matchView = (tr.dataset.name === viewVal);
+      }
+    }
+
+    if (!matchView) {
+      tr.style.display = 'none';
+      return;
+    }
+
+    // 2. Rotation, Site, & Month filters with cell highlighting & row filtering
+    let hasMatchInRow = false;
+    const tds = tr.querySelectorAll('td:not(.yr-col)');
+
+    tds.forEach((td, idx) => {
+      const span = td.querySelector('.cell');
+      if (!span) return;
+      const cellText = span.textContent;
+
+      // Reset styles
+      span.classList.remove('highlighted', 'dimmed');
+
+      let matchesRotation = true;
+      if (rotVal !== 'ALL') {
+        const cleanCell = cellText.replace(/\s+/g, '').toUpperCase();
+        const cleanRot = rotVal.replace(/\s+/g, '').toUpperCase();
+        
+        if (cleanRot === 'PATH') {
+          matchesRotation = cleanCell.includes('PATH');
+        } else if (cleanRot === 'LASER') {
+          matchesRotation = cleanCell.includes('LASER');
+        } else if (cleanRot === 'SURGERY' || cleanRot === 'SURG') {
+          matchesRotation = cleanCell.includes('SURG') || cleanCell.includes('P.SUR');
+        } else {
+          let rotSearch = cleanRot;
+          if (rotSearch.startsWith('SURGERY')) rotSearch = 'SURG' + rotSearch.substring(7);
+          if (cleanCell.includes(rotSearch) || cleanCell.includes(cleanRot)) {
+            matchesRotation = true;
+          } else {
+            matchesRotation = false;
+          }
+        }
+      }
+
+      let matchesSite = true;
+      if (siteVal !== 'ALL') {
+        const cleanCell = cellText.toUpperCase();
+        if (siteVal === 'S') {
+          matchesSite = span.classList.contains('s') || cleanCell.includes('(S)');
+        } else if (siteVal === 'D') {
+          matchesSite = span.classList.contains('d') || cleanCell.includes('(D)');
+        } else if (siteVal === 'A') {
+          matchesSite = span.classList.contains('a') || cleanCell.includes('(A)');
+        } else if (siteVal === 'F') {
+          matchesSite = span.classList.contains('f') || cleanCell.includes('(F)');
+        } else if (siteVal === 'JA') {
+          matchesSite = span.classList.contains('ja') || cleanCell.includes('(JA)');
+        } else if (siteVal === 'M') {
+          matchesSite = span.classList.contains('m') || cleanCell.includes('(M)');
+        } else if (siteVal === 'J') {
+          matchesSite = span.classList.contains('j') || cleanCell.includes('(J)');
+        }
+      }
+
+      let matchesMonth = true;
+      if (monthVal !== 'ALL') {
+        if (parseInt(monthVal, 10) !== idx) {
+          matchesMonth = false;
+        }
+      }
+
+      if (matchesRotation && matchesSite && matchesMonth) {
+        hasMatchInRow = true;
+        if (rotVal !== 'ALL' || siteVal !== 'ALL') {
+          span.classList.add('highlighted');
+        }
+      } else {
+        if (rotVal !== 'ALL' || siteVal !== 'ALL' || monthVal !== 'ALL') {
+          span.classList.add('dimmed');
+        }
+      }
+    });
+
+    if (rotVal !== 'ALL' || siteVal !== 'ALL' || monthVal !== 'ALL') {
+      tr.style.display = hasMatchInRow ? '' : 'none';
+    } else {
+      tr.style.display = '';
+    }
+  });
+
+  // Update title dynamically based on filters
+  const titleEl = document.getElementById('scheduleTitle');
+  let titleText = 'Rotation Schedule';
+  if (viewVal === 'ALL') titleText += ' — ALL Residents';
+  else if (isYearGroup) titleText += ` — ${viewVal} Residents`;
+  else titleText += ` — ${viewVal}`;
+
+  if (rotVal !== 'ALL') {
+    titleText += ` | Rotation: ${rotVal}`;
+  }
+  if (siteVal !== 'ALL') {
+    titleText += ` | Site: (${siteVal})`;
+  }
+  if (monthVal !== 'ALL') {
+    const monthNames = ['Oct 2026', 'Nov 2026', 'Dec 2026', 'Jan 2027', 'Feb 2027', 'Mar 2027', 'Apr 2027', 'May 2027', 'Jun 2027', 'Jul 2027', 'Aug 2027', 'Sep 2027'];
+    titleText += ` (${monthNames[parseInt(monthVal, 10)]})`;
+  }
+  titleEl.textContent = titleText;
+}
+
+// Event Listeners
+viewFilter.addEventListener('change', applyFilters);
+rotationFilter.addEventListener('change', applyFilters);
+siteFilter.addEventListener('change', applyFilters);
+monthFilter.addEventListener('change', applyFilters);
+
+// Initial Render
+applyFilters();
+</script>
+
+</body>
+</html>
